@@ -27,7 +27,7 @@ FROM core_fact_lesson_views
 GROUP BY lesson_id,
          view_date;
 
--- Ручной бэкфилл данных(для таких идиотов как я, кто сначала залил данные, а потом начал писать витрины)
+-- Ручной бэкфилл данных
 INSERT INTO dm_lesson_views_daily
 SELECT
     lesson_id,
