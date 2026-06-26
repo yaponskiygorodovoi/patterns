@@ -1,4 +1,4 @@
--- ПАТТЕРН ПО НАПИСАНИЮ ВИТРИНЫ В КЛИКЕ SummingMergeTree
+-- ПАТТЕРН ПО НАПИСАНИЮ ВИТРИНЫ В КЛИКЕ 
                     Нужна витрина
                           │
           ┌───────────────┼────────────────┐
@@ -12,8 +12,9 @@
      count/sum       State → Merge     Batch Rebuild
           │               │                │
          MV              MV        TRUNCATE + INSERT
-         
--- 1 DDL витрины
+
+-- 1 SummingMergeTree
+-- DDL витрины
 DROP TABLE IF EXISTS dm_lesson_views_daily
 ON CLUSTER clickhouse_cluster;
 
