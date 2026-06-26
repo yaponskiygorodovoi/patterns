@@ -14,6 +14,7 @@ CORE / DDS
 DM
   витрины под аналитику / BI / отчёты
 
+<<<<<<< HEAD
 
 
 
@@ -46,3 +47,5 @@ DM
   Distribution: by common filter/join key
 
   
+=======
+>>>>>>> c3ee574 (DDL_Greenplum)
