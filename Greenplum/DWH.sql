@@ -14,8 +14,6 @@ CORE / DDS
 DM
   витрины под аналитику / BI / отчёты
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 
@@ -47,10 +45,6 @@ DM
   Engine: AO column
   Distribution: by common filter/join key
 
-  
-=======
->>>>>>> c3ee574 (DDL_Greenplum)
-=======
 -- Слои
 RAW
 
@@ -74,4 +68,75 @@ CORE
 
 DM
 
->>>>>>> 65756a0 (слои)
+
+-- Валидация и вставка 
+
+WITH validated AS
+(
+SELECT
+
+*,
+
+user_id ~ '^[0-9]+$' AS valid_user,
+
+age ~ '^[0-9]+$' AS valid_age,
+
+registration_date ~ '^\d{4}-\d{2}-\d{2}$' AS valid_date,
+
+email IS NOT NULL AS valid_email
+
+FROM raw2.users_raw
+)
+
+INSERT INTO stg2.users_clean
+
+SELECT
+
+user_id::int,
+
+name,
+
+age::int,
+
+email,
+
+registration_date::date,
+
+load_dttm,
+
+batch_id,
+
+source_system
+
+FROM validated
+
+WHERE
+
+valid_user
+
+AND valid_age
+
+AND valid_date
+
+AND valid_email;
+
+-- Ветка карантина
+
+INSERT INTO stg2.users_quarantine
+
+SELECT
+
+...
+
+FROM validated
+
+WHERE NOT
+(
+valid_user
+
+AND valid_age
+
+AND valid_date
+
+AND valid_email
+);
