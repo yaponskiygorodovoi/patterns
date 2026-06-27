@@ -1,0 +1,206 @@
+1. Приведение типов (Type Conversion)
+Функция	Что делает
+toUInt8()	Преобразует в UInt8
+toUInt16()	UInt16
+toUInt32()	UInt32
+toUInt64()	UInt64
+toInt8()	Int8
+toInt16()	Int16
+toInt32()	Int32
+toInt64()	Int64
+toFloat32()	Float32
+toFloat64()	Float64
+toDecimal32(x,n)	Decimal
+toDecimal64(x,n)	Decimal64
+toDecimal128(x,n)	Decimal128
+toString()	В строку
+toDate()	В Date
+toDateTime()	В DateTime
+toDateTime64()	В DateTime64
+
+2. Безопасное преобразование
+Функция	Что делает
+toUInt32OrNull()	При ошибке NULL
+toUInt32OrZero()	При ошибке 0
+toUInt32OrDefault()	При ошибке значение по умолчанию
+toDateOrNull()	Date либо NULL
+toDateTimeOrNull()	DateTime либо NULL
+toDecimal64OrNull()	Decimal либо NULL
+
+Это, пожалуй, самые часто используемые функции при ETL.
+
+3. Парсинг дат
+Функция	Что делает
+parseDateTimeBestEffort()	Понимает почти любой формат даты
+parseDateTimeBestEffortOrNull()	То же + NULL
+parseDateTime64BestEffortOrNull()	Для DateTime64
+today()	Сегодня
+now()	Сейчас
+
+4. Работа с датами
+Функция	Что делает
+toYear()	Год
+toMonth()	Месяц
+toDayOfMonth()	День месяца
+toHour()	Час
+toMinute()	Минута
+toStartOfDay()	Начало дня
+toStartOfMonth()	Начало месяца
+toStartOfWeek()	Начало недели
+toStartOfYear()	Начало года
+dateDiff()	Разница между датами
+addDays()	Прибавить дни
+addMonths()	Прибавить месяцы
+subtractDays()	Вычесть дни
+
+5. Работа со строками
+Функция	Что делает
+concat()	Склеить строки
+length()	Длина строки
+lower()	Нижний регистр
+upper()	Верхний регистр
+trim()	Удалить пробелы
+replaceAll()	Заменить все
+replaceOne()	Заменить первое
+substring()	Подстрока
+startsWith()	Начинается с
+endsWith()	Заканчивается на
+position()	Позиция подстроки
+splitByChar()	Разбить строку
+splitByString()	Разбить по строке
+
+6. Regex
+Функция	Что делает
+match()	Проверка по regex
+extract()	Извлечь первое совпадение
+extractAll()	Все совпадения
+replaceRegexpAll()	Regex replace
+replaceRegexpOne()	Первое совпадение
+
+7. NULL
+Функция	Что делает
+ifNull()	Если NULL
+coalesce()	Первый не NULL
+nullIf()	Сделать NULL
+assumeNotNull()	Убрать Nullable
+isNull()	Проверка NULL
+isNotNull()	Проверка NOT NULL
+8. Логика
+Функция	Что делает
+if()	Аналог CASE
+multiIf()	CASE WHEN
+least()	Минимум
+greatest()	Максимум
+
+9. Агрегатные функции
+Функция	Что делает
+count()	Количество
+sum()	Сумма
+avg()	Среднее
+min()	Минимум
+max()	Максимум
+uniq()	Приблизительное количество
+uniqExact()	Точное количество
+groupArray()	Собрать массив
+groupUniqArray()	Уникальный массив
+argMax()	Значение при максимуме
+argMin()	Значение при минимуме
+quantile()	Квантиль
+median()	Медиана
+
+10. Aggregate States (для AggregatingMergeTree)
+Функция	Что делает
+sumState()	Состояние суммы
+countState()	Состояние count
+avgState()	Состояние avg
+uniqState()	Состояние uniq
+minState()	Состояние min
+maxState()	Состояние max
+sumMerge()	Объединить состояния
+countMerge()	Объединить count
+avgMerge()	Объединить avg
+uniqMerge()	Объединить uniq
+
+11. JSON
+Функция	Что делает
+JSONExtract()	Извлечь значение
+JSONExtractString()	Строка
+JSONExtractInt()	Int
+JSONExtractFloat()	Float
+JSONExtractBool()	Bool
+JSONExtractArrayRaw()	Массив
+
+12. Работа с массивами
+Функция	Что делает
+arrayJoin()	Развернуть массив
+arrayMap()	map
+arrayFilter()	filter
+arrayExists()	Есть элемент
+arrayAll()	Все удовлетворяют
+arrayFirst()	Первый элемент
+arraySort()	Сортировка
+arrayReverseSort()	Обратная сортировка
+arrayDistinct()	Уникальные
+has()	Содержит элемент
+length()	Размер массива
+
+13. Хэширование
+Функция	Что делает
+cityHash64()	Быстрый hash
+sipHash64()	SipHash
+MD5()	MD5
+SHA1()	SHA1
+SHA256()	SHA256
+
+14. Математика
+Функция	Что делает
+round()	Округление
+floor()	Вниз
+ceil()	Вверх
+abs()	Модуль
+pow()	Степень
+sqrt()	Корень
+rand()	Случайное число
+15. Оконные функции
+Функция	Что делает
+row_number()	Номер строки
+rank()	Ранг с пропусками
+dense_rank()	Ранг без пропусков
+lag()	Предыдущая строка
+lead()	Следующая строка
+first_value()	Первое значение
+last_value()	Последнее значение
+nth_value()	N-е значение
+
+⭐ Топ-30 функций, которые используют практически каждый день
+
+toUInt64OrNull
+toInt32OrNull
+toDecimal64OrNull
+parseDateTimeBestEffortOrNull
+toDate
+toDateTime
+toStartOfDay
+toStartOfMonth
+today
+now
+replaceAll
+trim
+concat
+lower
+upper
+length
+match
+extract
+if
+multiIf
+ifNull
+coalesce
+count
+sum
+avg
+uniqExact
+groupArray
+arrayJoin
+JSONExtract
+has 
