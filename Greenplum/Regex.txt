@@ -1,0 +1,39 @@
+
+
+Символ	Значение	Пример
+^	    начало строки	^abc
+$	    конец строки	abc$
+.	    любой символ	a.c
+\d	      цифра	          \d = 5
+[0-9]	  цифра	аналог    \d
+[A-Za-z]	английские буквы	abc
++	        один или больше	123
+*	ноль или больше	пустая строка тоже подходит
+?	ноль или один	необязательный символ
+{3}	  ровно 3 раза	123
+{2,5}	от 2 до 5 раз	
+
+WITH validated AS
+(
+SELECT
+
+*,
+
+user_id ~ '^[0-9]+$' AS valid_user,
+
+age ~ '^[0-9]+$' AS valid_age,
+
+registration_date ~ '^\d{4}-\d{2}-\d{2}$' AS valid_date,
+
+email IS NOT NULL AS valid_email
+
+FROM raw.users
+)
+
+email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+
+registration_date ~ '^\d{4}-\d{2}-\d{2}$'
+
+age ~ '^[0-9]+$'
+
+UUID ~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
