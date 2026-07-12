@@ -71,9 +71,13 @@ DM
 
 -- Стадия валидации 
 
-WITH validated  AS (
-SELECT 
-   user_id,
+-- 1. Один раз валидируем raw в промежуточную temp-таблицу
+
+DROP TABLE IF EXISTS tmp_users_validated;
+
+CREATE TEMP TABLE tmp_users_validated AS
+SELECT
+    user_id,
     name,
     age,
     email,
@@ -81,90 +85,29 @@ SELECT
     load_dttm,
     batch_id,
     source_system,
-    
-    user_id ~ '^[0-9]+$' AS valid_user,
-    age ~ '^[0-9]+$' AS valid_age,
-    email IS NOT NULL AS valid_email,
-    registration_date ~ '^\d{4}-\d{2}-\d{2}$' AS valid_date
+
+    -- вместо regex: проверяем, что строка не пустая и состоит только из цифр
+    user_id IS NOT NULL
+        AND user_id <> ''
+        AND translate(user_id, '0123456789', '') = '' AS valid_user,
+
+    age IS NOT NULL
+        AND age <> ''
+        AND translate(age, '0123456789', '') = ''
+        AND age::int BETWEEN 0 AND 120 AS valid_age,
+
+    email IS NOT NULL
+        AND email <> ''
+        AND position('@' IN email) > 1 AS valid_email,
+
+    -- проверка формата даты без regex
+    registration_date IS NOT NULL
+        AND length(registration_date) = 10
+        AND substring(registration_date, 5, 1) = '-'
+        AND substring(registration_date, 8, 1) = '-'
+        AND translate(replace(registration_date, '-', ''), '0123456789', '') = ''
+        AND to_char(to_date(registration_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') = registration_date
+        AS valid_date
+
 FROM raw2.users_raw
-) 
-
--- ветка Clean
-
-INSERT INTO stg2.users_clean
-
-SELECT
-
-user_id::int,
-
-name,
-
-age::int,
-
-email,
-
-registration_date::date,
-
-load_dttm,
-
-batch_id,
-
-source_system
-
-FROM validated
-
-WHERE
-
-valid_user
-
-AND valid_age
-
-AND valid_date
-
-AND valid_email;
-
--- ветка Quarantine
-
-WITH validated AS (
-    SELECT
-        user_id,
-        name,
-        age,
-        email,
-        registration_date,
-        load_dttm,
-        batch_id,
-        source_system,
-
-        user_id ~ '^[0-9]+$' AS valid_user,
-        age ~ '^[0-9]+$' AS valid_age,
-        email IS NOT NULL AS valid_email,
-        registration_date ~ '^\d{4}-\d{2}-\d{2}$' AS valid_date
-    FROM raw2.users_raw
-)
-INSERT INTO stg2.users_quarantine
-SELECT
-    user_id AS user_id_raw,
-    name AS name_raw,
-    age AS age_raw,
-    email AS email_raw,
-    registration_date AS registration_date_raw,
-
-    CASE
-        WHEN NOT valid_user THEN 'invalid user_id'
-        WHEN NOT valid_age THEN 'invalid age'
-        WHEN NOT valid_email THEN 'invalid email'
-        WHEN NOT valid_date THEN 'invalid registration_date'
-        ELSE 'unknown error'
-    END AS error_reason,
-
-    load_dttm,
-    batch_id,
-    source_system
-FROM validated
-WHERE NOT (
-    valid_user
-    AND valid_age
-    AND valid_date
-    AND valid_email
-);
+DISTRIBUTED BY (batch_id);
