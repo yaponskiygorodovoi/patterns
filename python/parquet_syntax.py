@@ -38,3 +38,10 @@ filtered_table = pq.read_table("users.parquet", columns=["user_id","name", "age"
 print(filtered_table)
 print(filtered_table.to_pylist())
 print(filtered_table.num_rows)
+
+parquet_file = pq.ParquetFile('users.parquet')
+
+print(parquet_file.metadata.num_rows)
+print(parquet_file.metadata.num_columns)
+print(parquet_file.metadata.num_row_groups)
+print(parquet_file.schema)
