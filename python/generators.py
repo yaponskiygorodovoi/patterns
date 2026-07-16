@@ -7,6 +7,18 @@
 # selected = select_fields(paid)
 # batches = batch_generator(selected, batch_size=1000)
 
+
+# Паттерн	Где пригодится
+# Source generator	чтение CSV, файлов, SQL, Kafka
+# Filter generator	фильтрация строк
+# Transform generator	очистка и преобразование
+# Validation/router	clean и quarantine
+# Fixed-size batching	batch insert
+# Pagination generator	получение данных из API
+# Time/size batching	Kafka и streaming
+# Sliding window	аналитика событий и временные ряды
+
+
 for batch in batches:
     insert_into_database(batch)
 
