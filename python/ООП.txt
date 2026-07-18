@@ -1,0 +1,33 @@
+        ООП
+
+       ┌───────────────────────────┐
+       │          Pipeline         │
+       │                           │
+       │ source                    │
+       │ target                    │
+       │ config                    │  ← ИНКАПСУЛЯЦИЯ
+       │ methods                   │
+       └─────────────┬─────────────┘
+                     │
+              НАСЛЕДОВАНИЕ
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+   BatchPipeline         StreamingPipeline
+
+       run()                  run()
+         ↓                      ↓
+   batch logic            streaming logic
+          \                    /
+           \                  /
+            ПОЛИМОРФИЗМ
+
+        for pipeline in pipelines:
+            pipeline.run()
+
+
+Пользователь всей этой системы видит:
+
+            pipeline.run()
+                 ↑
+             АБСТРАКЦИЯ  
