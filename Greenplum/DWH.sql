@@ -24,49 +24,49 @@ RAW
   Engine: heap/ao row
   Distribution: random or source key
 
-STG
+-- STG
   Pattern: Clean + Quarantine
   Engine: temp/staging tables
   Distribution: by business key
 
-CORE DIM
+-- CORE DIM
   Pattern: SCD1 / SCD2
   Engine: AO row or heap
   Distribution: by dimension key or replicated
 
-CORE FACT
+-- CORE FACT
   Pattern: Append fact
   Engine: AO column
   Partition: by date
   Distribution: by main join key
 
-DM
+-- DM
   Pattern: Full Refresh / Incremental / Partition Refresh
   Engine: AO column
   Distribution: by common filter/join key
 
 -- Слои
-RAW
+-- RAW
 
-↓
+-- ↓
 
-VALIDATE
+-- VALIDATE
 
-↓
+-- ↓
 
-CLEAN
+-- CLEAN
 
-↓
+-- ↓
 
-QUARANTINE
+-- QUARANTINE
 
-↓
+-- ↓
 
-CORE
+-- CORE
 
-↓
+-- ↓
 
-DM
+-- DM
 
 
 -- Стадия валидации 
