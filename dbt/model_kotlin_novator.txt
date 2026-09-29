@@ -1,0 +1,44 @@
+                    MONITORING
+                        │
+                        ▼
+            abnormal event count
+                        │
+                        ▼
+             compare pipeline stages
+                        │
+              ┌─────────┴─────────┐
+              ▼                   ▼
+          before JOIN          after JOIN
+          10.0M               10.4M
+                                  │
+                                  ▼
+                          investigate JOIN
+                                  │
+                                  ▼
+                      duplicate device_id
+                                  │
+                                  ▼
+                     historical dictionary
+                                  │
+                                  ▼
+                   define current-state rule
+                                  │
+                                  ▼
+                    int_current_devices
+                                  │
+                         ┌────────┴────────┐
+                         ▼                 ▼
+                      unique            not_null
+                         │
+                         ▼
+                       JOIN
+                         │
+                         ▼
+                    enriched_events
+                         │
+                  ┌──────┴──────┐
+                  ▼             ▼
+            unique event_id   completeness
+                  │
+                  ▼
+                MART
